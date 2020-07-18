@@ -17,9 +17,6 @@ app.config["JWT_BLACKLIST_TOKEN_CHECKS"] = ["access", "refresh"]
 app.config["JWT_SECRET_KEY"] = "aasdasdj9882unsad"
 jwt = JWTManager(app)
 
-@app.before_first_request
-def create_table():
-	db.create_all()
 
 @jwt.token_in_blacklist_loader
 def check_if_token_in_blacklist(decrypted_token):
