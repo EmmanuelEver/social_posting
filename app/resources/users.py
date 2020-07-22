@@ -51,6 +51,10 @@ class UserList(Resource):
 		users = UserModel.query_all()
 		return {"users" : users}
 
+class Home(Resource):
+	@jwt_required
+	def get(self):
+		return 200
 
 class UserLogin(Resource):
 
@@ -69,7 +73,8 @@ class UserLogin(Resource):
 
 			return {
 					"access_token" : access_token,
-					"refresh_token": refresh_token
+					"refresh_token": refresh_token,
+					"username" : user.username
 				   },201
 		else:
 			return {"msg" : "invalid credentials"}, 401
