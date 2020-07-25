@@ -74,7 +74,8 @@ class UserLogin(Resource):
 			return {
 					"access_token" : access_token,
 					"refresh_token": refresh_token,
-					"username" : user.username
+					"username" : user.username,
+					"firstname" : user.firstname
 				   },201
 		else:
 			return {"msg" : "invalid credentials"}, 401
@@ -87,7 +88,7 @@ class TokenRefresh(Resource):
 		current_user = get_jwt_identity()
 		if current_user:
 			new_token = create_access_token(current_user, fresh = False)
-			return { "access_token" : new_token} 
+			return { "access_token" : new_token},200
 
 class UserLogout(Resource):
 
@@ -98,3 +99,23 @@ class UserLogout(Resource):
 		revoked_token = RevokedToken(jti = jti)
 		revoked_token.add()
 		return {"msg" : "Access token revoked"}, 200
+
+
+class __Profile__(Resource):
+
+	@jwt_required
+	def get(self):
+		_id = get_jwt_identity()
+		user = UserModel.find_by_id(_id)
+		if user:
+			return {"user" : user.json(), "posts" : user.posts},200
+		return {"msg" : "user not found"},400
+
+class Profile(Resource):
+
+	@jwt_required
+	def get(self, username):
+		user = UserModel.find_by_username(username)
+		if user:
+			return {"user" : user.json(), "posts" : user.posts},200
+		return {"msg" : "user not found"},400

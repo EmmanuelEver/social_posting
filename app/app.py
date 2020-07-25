@@ -1,7 +1,7 @@
 from flask import Flask
 from flask_restful import Api
 from flask_jwt_extended import JWTManager
-from resources.users import UserRegister, UserList, UserLogin, TokenRefresh, UserLogout, Home
+from resources.users import UserRegister, UserList, UserLogin, TokenRefresh, UserLogout, Home, __Profile__, Profile
 from resources.posts import Post
 from models.user import RevokedToken
 
@@ -59,6 +59,8 @@ api.add_resource(UserLogout, "/logout")
 api.add_resource(Post, "/user/post/<int:post_id>", endpoint="post_id")
 api.add_resource(Post, "/user/post")
 api.add_resource(Home, "/")
+api.add_resource(__Profile__, "/profile")
+api.add_resource(Profile, "/<str:username>")
 
 if "__main__" == __name__:
 	from db import db
