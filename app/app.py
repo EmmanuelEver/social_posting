@@ -60,7 +60,7 @@ api.add_resource(Post, "/user/post/<int:post_id>", endpoint="post_id")
 api.add_resource(Post, "/user/post")
 api.add_resource(Home, "/")
 api.add_resource(__Profile__, "/profile")
-api.add_resource(Profile, "/<str:username>")
+api.add_resource(Profile, "/<string:username>")
 
 if "__main__" == __name__:
 	from db import db
