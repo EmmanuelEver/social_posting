@@ -101,7 +101,7 @@ class UserLogout(Resource):
 		return {"msg" : "Access token revoked"}, 200
 
 
-class __Profile__(Resource):
+class UserProfile(Resource):
 
 	@jwt_required
 	def get(self):
