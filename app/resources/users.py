@@ -66,7 +66,7 @@ class UserLogin(Resource):
 		data = UserLogin.parser.parse_args()
 		user = UserModel.find_by_username(data["username"])
 		if not user:
-			return {"msg", "username doesn't match any account"}, 401
+			return {"msg" : "username doesn't match any account"}, 401
 		if safe_str_cmp(data["password"], user.password):
 			access_token  = create_access_token(identity = user.id, fresh = True)
 			refresh_token = create_refresh_token(user.id)
