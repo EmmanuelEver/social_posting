@@ -40,7 +40,7 @@ class UserRegister(Resource):
 			print("about to save")
 			print(user)
 			user.save_to_db()
-			return {"msg" : "User Successfully created"}
+			return {"msg" : "User Successfully created"},400
 		except:
 			return {"msg" : "Something went wrong"}, 500
 
@@ -49,12 +49,14 @@ class UserList(Resource):
 	@jwt_required
 	def get(self):
 		users = UserModel.query_all()
-		return {"users" : users}
+		return {"users" : users},200
 
 class Home(Resource):
 	@jwt_required
 	def get(self):
-		return 200
+		_id = get_jwt_identity()
+		user = UserModel.find_by_id(_id)
+		return {"user" : user.json()},200
 
 class UserLogin(Resource):
 
