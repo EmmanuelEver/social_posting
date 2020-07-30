@@ -5,11 +5,12 @@ from resources.users import UserRegister, UserList, UserLogin, TokenRefresh, Use
 from resources.posts import Post, PostList
 from resources.photos import Photo, Add_Dp, Set_Dp
 from models.user import RevokedToken
+import os
 
 app = Flask(__name__)
 api = Api(app)
 
-app.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite:///data.db'
+app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL",'sqlite:///data.db')
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["SECRET_KEY"] = "aasdasdj9882unsad"
 
