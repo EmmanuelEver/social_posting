@@ -1,5 +1,6 @@
 from db import db
 from models.post import PostModel
+from models.photo import PhotoModel
 
 class UserModel(db.Model):
 	__tablename__ = "users"
@@ -15,6 +16,8 @@ class UserModel(db.Model):
 	age = db.Column(db.Integer, nullable = False)
 	gender = db.Column(db.String(1), nullable = False)
 	posts = db.relationship("PostModel", backref = "author", lazy = "dynamic")
+	photos = db.relationship("PhotoModel", backref = "user", lazy = "dynamic")
+	dp_path = db.Column(db.String, nullable = True)
 
 
 	def __init__(self, firstname, lastname, username, password, address, number, birth, age, gender):
@@ -40,9 +43,22 @@ class UserModel(db.Model):
 		self.posts.append(post)
 		db.session.commit()
 
-	def get_post(self):
+	def add_photo(self, photo):
+		self.photos.append(photo)
+		db.session.commit()
+
+	def set_dp(self, dp_path):
+		self.dp_path = dp_path
+		db.session.commit()
+		return {"filepath" : self.dp_path}
+
+	def get_posts(self):
 		posts = [ post.json() for post in self.posts ]
 		return posts
+
+	def get_photos(self):
+		photos = [ photo.json() for photo in self.photos ]
+		return photos
 
 	def json(self):
 		return {
@@ -51,7 +67,8 @@ class UserModel(db.Model):
 			    "lastname" : self.lastname,
 			    "address"  : self.address,
 			    "age" 	   : self.age,
-			    "gender"   : self.gender
+			    "gender"   : self.gender,
+			    "dp" 	   : self.dp_path
 			   }
 
 	@classmethod

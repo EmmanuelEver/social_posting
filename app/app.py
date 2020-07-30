@@ -2,7 +2,8 @@ from flask import Flask
 from flask_restful import Api
 from flask_jwt_extended import JWTManager
 from resources.users import UserRegister, UserList, UserLogin, TokenRefresh, UserLogout, Home, UserProfile, Profile
-from resources.posts import Post
+from resources.posts import Post, PostList
+from resources.photos import Photo, Add_Dp, Set_Dp
 from models.user import RevokedToken
 
 app = Flask(__name__)
@@ -58,9 +59,14 @@ api.add_resource(TokenRefresh, "/refresh")
 api.add_resource(UserLogout, "/logout")
 api.add_resource(Post, "/user/post/<int:post_id>", endpoint="post_id")
 api.add_resource(Post, "/user/post")
+api.add_resource(PostList, "/posts")
 api.add_resource(Home, "/")
 api.add_resource(UserProfile, "/profile")
 api.add_resource(Profile, "/<string:username>")
+api.add_resource(Photo, "/photo/<int:photo_id>", endpoint="photo_id")
+api.add_resource(Photo, "/photo")
+api.add_resource(Add_Dp, "/add_dp")
+api.add_resource(Set_Dp, "/set_dp/<int:photo_id>")
 
 if "__main__" == __name__:
 	from db import db

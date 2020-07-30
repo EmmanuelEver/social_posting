@@ -61,6 +61,7 @@ class Home(Resource):
 			return {"user" : user.json()},200
 		return {"msg" : "user not found"},400
 
+
 class UserLogin(Resource):
 
 	parser = reqparse.RequestParser()
@@ -113,7 +114,7 @@ class UserProfile(Resource):
 		_id = get_jwt_identity()
 		user = UserModel.find_by_id(_id)
 		if user:
-			return {"user" : user.json(), "posts" : user.get_post()},200
+			return {"user" : user.json(), "posts" : user.get_posts(), "photos" : user.get_photos()},200
 		return {"msg" : "user not found"},400
 
 class Profile(Resource):
@@ -122,5 +123,5 @@ class Profile(Resource):
 	def get(self, username):
 		user = UserModel.find_by_username(username)
 		if user:
-			return {"user" : user.json(), "posts" : user.get_post()},200
+			return {"user" : user.json(), "posts" : user.get_posts(), "photos" : user.get_photos()},200
 		return {"msg" : "user not found"},400
