@@ -8,7 +8,7 @@ class PostModel(db.Model):
 	caption = db.Column(db.String(1000), nullable = True)
 	filepath = db.Column(db.String(50), nullable = True)
 	date_created = db.Column(db.Date, nullable = False)
-	user_id = db.Column(db.String(50), db.ForeignKey("users.id"))
+	user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
 
 	def __init__(self, title, caption, filepath, date_created):
 		self.title = title
