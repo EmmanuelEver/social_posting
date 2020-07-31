@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, make_response
 from flask_restful import Api
 from flask_jwt_extended import JWTManager
 from resources.users import UserRegister, UserList, UserLogin, TokenRefresh, UserLogout, Home, UserProfile, Profile
@@ -52,6 +52,10 @@ def unauthorized_callback(error):
 		"msg" : f"{error} Unauthorized user",
 		"status" : 401
 	}
+@app.route('/favicon.ico')
+def favicon():
+    return
+           
 
 api.add_resource(UserRegister,"/register")
 api.add_resource(UserList, "/users")
