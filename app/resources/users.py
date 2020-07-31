@@ -40,6 +40,7 @@ class UserRegister(Resource):
 			print("about to save")
 			print(user)
 			user.save_to_db()
+			print("finish saving to db")
 			return {"msg" : "User Successfully created"},200
 		except:
 			return {"msg" : "Something went wrong"}, 500
