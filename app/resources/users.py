@@ -42,8 +42,9 @@ class UserRegister(Resource):
 			user.save_to_db()
 			print("finish saving to db")
 			return {"msg" : "User Successfully created"},200
-		except:
-			return {"msg" : "Something went wrong"}, 500
+		except Exception as e:
+			print({"msg" : e.message, "traceback" : e.with_traceback()})
+			return {"msg" : e.message, "traceback" : e.with_traceback()}, 500
 
 
 class UserList(Resource):
