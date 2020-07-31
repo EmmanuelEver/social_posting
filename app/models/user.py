@@ -10,7 +10,7 @@ class UserModel(db.Model):
 	lastname = db.Column(db.String(20), nullable = False)
 	username = db.Column(db.String(20), unique = True, nullable = False)
 	password = db.Column(db.String(20), nullable = False)
-	address = db.Column(db.String(20), nullable = True)
+	address = db.Column(db.String(100), nullable = True)
 	number = db.Column(db.String(20), unique = True, nullable = False,)
 	birth = db.Column(db.Date, nullable = False)
 	age = db.Column(db.Integer, nullable = False)
