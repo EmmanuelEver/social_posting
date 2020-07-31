@@ -21,11 +21,14 @@ class Photo(Resource):
 			if not PhotoModel.validate(ext):
 				return {"msg" : "invalid filetype"}, 400
 			else:
-				data["date_created"] = datetime.date(datetime.now())
-				photo = PhotoModel(**data)
-				photo.save_to_db()
-				user.add_photo(photo)
-				return {"msg" : "successfully added_photo", "filepath" : photo.filepath},200
+				try:
+					data["date_created"] = datetime.date(datetime.now())
+					photo = PhotoModel(**data)
+					photo.save_to_db()
+					user.add_photo(photo)
+					return {"msg" : "successfully added_photo", "filepath" : photo.filepath},200
+				except Exception as e:
+					print(e, e.with_traceback())
 		return {"msg" : "user not found"},400
 
 	@jwt_required

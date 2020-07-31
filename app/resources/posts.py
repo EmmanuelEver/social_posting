@@ -26,7 +26,8 @@ class Post(Resource):
 			post.save_to_db()
 			user.add_post(post)
 			return {"msg" : "Post added"}, 200
-		except:
+		except Exception as e:
+			print(e.message, e.with_traceback())
 			return {"msg" : "error adding new post"}, 500
 
 	@jwt_required
