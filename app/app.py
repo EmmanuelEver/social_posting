@@ -3,14 +3,14 @@ from flask_restful import Api
 from flask_jwt_extended import JWTManager
 from resources.users import UserRegister, UserList, UserLogin, TokenRefresh, UserLogout, Home, UserProfile, Profile
 from resources.posts import Post, PostList
-from resources.photos import Photo, Add_Dp, Set_Dp
+from resources.photos import Photo, Add_Dp, Set_Dp, Photos
 from models.user import RevokedToken
 import os
 
 app = Flask(__name__)
 api = Api(app)
 
-app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get('DATABASE_URL')
+app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get('DATABASE_URL', 'sqlite:///data.db')
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["SECRET_KEY"] = "aasdasdj9882unsad"
 
@@ -18,7 +18,6 @@ app.config["JWT_BLACKLIST_ENABLED"] = True
 app.config["JWT_BLACKLIST_TOKEN_CHECKS"] = ["access", "refresh"]
 app.config["JWT_SECRET_KEY"] = "aasdasdj9882unsad"
 jwt = JWTManager(app)
-
 
 @jwt.token_in_blacklist_loader
 def check_if_token_in_blacklist(decrypted_token):
@@ -70,6 +69,7 @@ api.add_resource(UserProfile, "/profile")
 api.add_resource(Profile, "/<string:username>")
 api.add_resource(Photo, "/photo/<int:photo_id>", endpoint="photo_id")
 api.add_resource(Photo, "/photo")
+api.add_resource(Photos, "/<string:username>/photos")
 api.add_resource(Add_Dp, "/add_dp")
 api.add_resource(Set_Dp, "/set_dp/<int:photo_id>")
 

@@ -82,3 +82,13 @@ class Set_Dp(Resource):
 				return {"filepath" : new_dp_path, "msg" : "DP path successfully changed"},200
 
 			return {"msg" : "user not found"}, 400
+
+class Photos(Resource):
+
+	@jwt_required
+	def get(self, username):
+		user = UserModel.find_by_username(username)
+		if user:
+			photos = user.get_photos()
+			return {"photos" : photos}, 200
+		return {"msg" : "user doesn't exist"}, 404
